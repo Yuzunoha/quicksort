@@ -80,7 +80,7 @@ contract QuickSort {
     uint[] memory ret = new uint[](len);
     for(i = 0; i < len; i++){
       ret[i] = buf[i];
-    }    
+    }
     return ret;
   }
   function getMyArray() external view returns(uint[]) {
@@ -107,7 +107,6 @@ contract QuickSort {
     for(i = 0; i < len; i++){
       mArray[i] = b[i];
     }
-
     emit QuickSortComplete(msgSender, len, now);
   }
 }
