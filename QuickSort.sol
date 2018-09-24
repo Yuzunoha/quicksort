@@ -49,14 +49,43 @@ contract SimpleStore {
     _quicksort_core(a, 0, a.length - 1);
     return a;
   }
+  function _bytes32ArrayToUintArray(bytes32[] _bytes32Array) private pure returns(uint[]) {
+    uint lenIn = _bytes32Array.length;
+    uint lenOut = lenIn * 32;
+    uint[] memory ret = new uint[](lenOut);
+    uint cnt = 0;
+    for(uint i = 0; i < lenIn; i++){
+      for(uint j = 0; j < 32; j++){
+        ret[cnt++] = uint(_bytes32Array[i][j]);
+      }
+    }
+    return ret;
+  }
+  function _getRandomUintArray(uint len) private view returns(uint[]) {
+    uint nowLocal = now;
+    address msgSender = msg.sender;
+    uint times = 1 + uint(len / 32);
+    bytes32[] memory bytes32Array = new bytes32[](times);
+    uint i;
+    for(i = 0; i < times; i++){
+      uint seed = i + 1234567890;
+      bytes32Array[i] = keccak256(seed, nowLocal, msgSender);
+    }
+    uint[] memory buf = _bytes32ArrayToUintArray(bytes32Array);
+    uint[] memory ret = new uint[](len);
+    for(i = 0; i < len; i++){
+      ret[i] = buf[i];
+    }    
+    return ret;
+  }
   function getArray() external view returns(uint[]) {
     return mArray;
   }
   function setRandom(uint len) external {
     mArray.length = 0;
+    uint[] memory randomUintArray = _getRandomUintArray(len);
     for(uint i = 0; i < len; i++){
-      uint n = len - 1 - i;
-      mArray.push(n);
+      mArray.push(randomUintArray[i]);
     }
   }
   function quicksot() external {
