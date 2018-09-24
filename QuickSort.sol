@@ -1,6 +1,11 @@
 pragma solidity ^0.4.24;
 contract QuickSort {
-  uint[] private mArray;
+  mapping(address => uint[]) private mOwnArray;
+  event QuickSortComplete(
+    address indexed who,
+    uint indexed length,
+    uint indexed timestamp
+  );
   function _getPivot(uint a, uint b, uint c) private pure returns(uint) {
     if(a > b){
       if(b > c){
@@ -78,10 +83,11 @@ contract QuickSort {
     }    
     return ret;
   }
-  function getArray() external view returns(uint[]) {
-    return mArray;
+  function getMyArray() external view returns(uint[]) {
+    return mOwnArray[msg.sender];
   }
   function setRandom(uint len) external {
+    uint[] storage mArray = mOwnArray[msg.sender];
     mArray.length = 0;
     uint[] memory randomUintArray = _getRandomUintArray(len);
     for(uint i = 0; i < len; i++){
@@ -89,6 +95,8 @@ contract QuickSort {
     }
   }
   function quicksot() external {
+    address msgSender = msg.sender;
+    uint[] storage mArray = mOwnArray[msgSender];
     uint len = mArray.length;
     uint[] memory b = new uint[](len);
     uint i;
@@ -99,5 +107,7 @@ contract QuickSort {
     for(i = 0; i < len; i++){
       mArray[i] = b[i];
     }
+
+    emit QuickSortComplete(msgSender, len, now);
   }
 }
