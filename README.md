@@ -1,2 +1,2 @@
 # quicksort
-https://github.com/Yuzunoha/quicksort
+https://yuzunoha.github.io/quicksort/
