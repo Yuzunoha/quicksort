@@ -1,7 +1,7 @@
 // グローバル変数初期化
 function init() {
   // 初期設定実行済判定
-  if (null !== quicksort) {
+  if (gQuickSort) {
     // 初期設定実行済
     return
   }
@@ -23,5 +23,5 @@ function init() {
     return
   }
   // コントラクトインスタンス設定
-  gQuicSort = window.web3.eth.contract(ABI_QUICKSORT).at(ADDRESS_QUICKSORT)
+  gQuickSort = window.web3.eth.contract(JSON.parse(ABI_QUICKSORT)).at(ADDRESS_QUICKSORT)
 }
