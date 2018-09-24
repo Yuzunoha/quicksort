@@ -1,9 +1,11 @@
+/* globals */
+const gQuicSort
+
 /* addresses */
-const ADDRESS_QUICKSORT = '0x752c4b2b237a87b93f45db5c52e40d4de7c781b8';
+const ADDRESS_QUICKSORT = '0x752c4b2b237a87b93f45db5c52e40d4de7c781b8'
 
 /* ABIs */
-const ABI_QUICKSORT = [
-	{
+const ABI_QUICKSORT = [{
 		"constant": false,
 		"inputs": [],
 		"name": "quicksot",
@@ -14,12 +16,10 @@ const ABI_QUICKSORT = [
 	},
 	{
 		"constant": false,
-		"inputs": [
-			{
-				"name": "len",
-				"type": "uint256"
-			}
-		],
+		"inputs": [{
+			"name": "len",
+			"type": "uint256"
+		}],
 		"name": "setRandom",
 		"outputs": [],
 		"payable": false,
@@ -30,14 +30,12 @@ const ABI_QUICKSORT = [
 		"constant": true,
 		"inputs": [],
 		"name": "getArray",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256[]"
-			}
-		],
+		"outputs": [{
+			"name": "",
+			"type": "uint256[]"
+		}],
 		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	}
-];
+]
