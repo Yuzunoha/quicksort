@@ -1,5 +1,5 @@
 pragma solidity ^0.4.24;
-contract SimpleStore {
+contract QuickSort {
   uint[] private mArray;
   function _getPivot(uint a, uint b, uint c) private pure returns(uint) {
     if(a > b){
