@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>QuickSort</title>
+  <link rel="stylesheet" type="text/css" href="css.css">
+</head>
+<!DOCTYPE html>
+
+<body>
+  <h2>クイックソート</h2>
+  <p id="msg"><br></p>
+  <p id="data"></p>
+  <br>
+  <a href="#" class="square_btn" onclick="doQuicksort();return false;">クイックソート実行</a>
+  <br>
+  <br>
+  length : <input id="len" type="number" min="0">
+  <a href="#" class="square_btn" onclick="doSetRandom();return false;">初期化実行</a>
+
+  <script src="./const.js"></script>
+  <script src="./main.js"></script>
+  <script>
+    const data = document.getElementById('data')
+    const msg = document.getElementById('msg')
+    const update = () => {
+      gQuickSort.getMyArray((err, ret) => {
+        let s = '[]'
+        if (ret.length) {
+          s = ret
+        }
+        data.innerHTML = s;
+      })
+    }
+    const doSetRandom = () => {
+      const len = Math.floor(Number(document.getElementById('len').value));
+      console.log("doSetRandom() len : " + len)
+      gQuickSort.setRandom(len, (err, ret) => {
+        console.log('setRandom()')
+        console.log(ret)
+      })
+    }
+    const doQuicksort = () => {
+      gQuickSort.quicksort((err, ret) => {
+        console.log('quicksort()')
+        console.log(ret)
+      })
+    }
+    const main = () => {
+      init()
+      update()
+      /* イベント監視 */
+      gQuickSort.QuickSortCompleted().watch((err, ret) => {
+        // 自分のイベントかどうか判定
+        if (window.web3.eth.defaultAccount === ret.args.who) {
+          // 自分のイベントである
+          msg.innerHTML = 'QuickSortCompleted !!'
+          console.log('QuickSortCompleted')
+          console.log(ret)
+          update()
+        }
+      })
+      gQuickSort.SetRandomCompleted().watch((err, ret) => {
+        // 自分のイベントかどうか判定
+        if (window.web3.eth.defaultAccount === ret.args.who) {
+          // 自分のイベントである
+          msg.innerHTML = 'SetRandomCompleted !!'
+          console.log('SetRandomCompleted')
+          console.log(ret)
+          update()
+        }
+      })
+    }
+    window.addEventListener("load", event => {
+      main()
+    })
+  </script>
+</body>
+
+</html>
