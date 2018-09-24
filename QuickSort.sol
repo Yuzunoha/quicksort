@@ -6,6 +6,11 @@ contract QuickSort {
     uint length,
     uint timestamp
   );
+  event SetRandomCompleted(
+    address indexed who,
+    uint length,
+    uint timestamp
+  );
   function _getPivot(uint a, uint b, uint c) private pure returns(uint) {
     if(a > b){
       if(b > c){
@@ -93,6 +98,7 @@ contract QuickSort {
     for(uint i = 0; i < len; i++){
       mArray.push(randomUintArray[i]);
     }
+    emit SetRandomCompleted(msg.sender, len, now);
   }
   function quicksort() external {
     address msgSender = msg.sender;
